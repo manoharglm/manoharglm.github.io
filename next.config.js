@@ -2,11 +2,12 @@
 const nextConfig = {
   output: "export",
   distDir: "out",
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Since Next.js Image Optimization doesn't work with static export
+    unoptimized: true,
   },
   basePath: "/manoharglm.github.io",
-  assetPrefix: "/manoharglm.github.io/",
+  assetPrefix: "https://manoharglm.github.io/",
 };
 
 export default nextConfig;
