@@ -6,8 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: "/manoharglm.github.io",
-  assetPrefix: "https://manoharglm.github.io/",
+  basePath: '/manoharglm.github.io',
+  assetPrefix: '/manoharglm.github.io',
 };
 
 export default nextConfig;
