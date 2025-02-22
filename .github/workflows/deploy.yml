@@ -19,8 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'pnpm'
+          node-version: '18.x'  # Use '18.x' to get the latest patch version
 
       - name: Install pnpm
         run: npm install -g pnpm
