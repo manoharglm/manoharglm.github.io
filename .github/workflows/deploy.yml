@@ -11,6 +11,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,8 +22,8 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      - name: Enable pnpm
-        run: corepack enable
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install
