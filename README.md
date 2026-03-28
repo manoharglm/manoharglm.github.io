@@ -1,24 +1,25 @@
-Welcome to the NextJS base template bootstrapped using the `create-next-app`. This template supports TypeScript, but you can use normal JavaScript as well.
+# manoharglm.github.io
 
-## Getting Started
+Portfolio site rebuilt with Astro.
 
-Hit the run button to start the development server.
+## Commands
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+pnpm deploy
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on `/api/hello`. This endpoint can be edited in `pages/api/hello.ts`.
+## Data source
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The homepage content is pulled from a public JSON endpoint at build time:
 
-## Learn More
+- `src/lib/portfolio.ts`
 
-To learn more about Next.js, take a look at the following resources:
+## Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-## Productionizing your Next App
-
-To make your next App run smoothly in production make sure to deploy your project with [Repl Deployments](https://docs.replit.com/hosting/deployments/about-deployments)!
-
-You can also produce a production build by running `npm run build` and [changing the run command](https://docs.replit.com/programming-ide/configuring-repl#run) to `npm run start`.
+- Static site output, good fit for GitHub Pages
+- Deploy script publishes the `dist/` directory with `gh-pages`
+- Current rewrite work lives on the `astro-rewrite` branch

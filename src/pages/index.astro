@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPortfolioData } from '../lib/portfolio';
+
+const profileImage =
+  'https://uflt4z7qv9.ufs.sh/f/zNsYRJ7pFeiQjbhxJVgE3INtnPu18ydWx4vacsweLkrlXmTV';
+
+const prettyLabel = (label: string) =>
+  label === 'instagram' ? 'X / Twitter' : label.charAt(0).toUpperCase() + label.slice(1);
+
+let data = null;
+let loadError = false;
+
+try {
+  data = await getPortfolioData();
+} catch (error) {
+  console.error(error);
+  loadError = true;
+}
+
+const fullName = data ? `${data.profile.firstName} ${data.profile.lastName}` : 'Manohar Gunduboina';
+const pageTitle = `${fullName} — Portfolio`;
+const pageDescription = data?.body.about ?? 'Portfolio of Manohar Gunduboina, full-stack and React Native developer.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  {
+    loadError || !data ? (
+      <section class="card error-state">
+        <p class="eyebrow">Portfolio</p>
+        <h1>Couldn’t load portfolio data.</h1>
+        <p class="copy">The public data source didn’t respond during the build. Try again in a moment.</p>
+      </section>
+    ) : (
+      <div class="stack">
+        <section class="card hero">
+          <img class="avatar" src={profileImage} alt={fullName} loading="eager" />
+          <div class="hero-copy">
+            <div>
+              <p class="eyebrow">Portfolio</p>
+              <h1>{fullName}</h1>
+              <p class="subtitle">{data.profile.title}</p>
+            </div>
+
+            <p class="copy">{data.body.about}</p>
+
+            <div class="actions">
+              <a class="button primary" href={`mailto:${data.body.email}`}>Let’s work together</a>
+              <a class="button secondary" href="#experience">View experience</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid">
+          <section class="card section">
+            <div class="section-header">
+              <p class="eyebrow">About</p>
+              <h2>Building products that ship cleanly.</h2>
+            </div>
+            <p class="copy">
+              {data.body.about}
+            </p>
+          </section>
+
+          <section class="card section contact-card">
+            <div class="section-header">
+              <p class="eyebrow">Connect</p>
+              <h2>{data.body.contacHeader ?? 'Let’s talk.'}</h2>
+            </div>
+            <p class="copy">{data.body.contact}</p>
+            <a class="email-link" href={`mailto:${data.body.email}`}>{data.body.email}</a>
+            <div class="link-row">
+              {Object.entries(data.links).map(([label, href]) => (
+                <a class="text-link chip" href={href} target="_blank" rel="noreferrer">{prettyLabel(label)}</a>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section id="experience" class="card section">
+          <div class="section-header">
+            <p class="eyebrow">Experience</p>
+            <h2>Recent work</h2>
+          </div>
+
+          <div class="timeline">
+            {data.experiences.map((experience) => (
+              <article class="experience">
+                <div class="experience-top">
+                  <div>
+                    <h3>{experience.title}</h3>
+                    <p class="subtitle">{experience.company}</p>
+                  </div>
+                  <p class="meta">{experience.startDate} — {experience.endDate}</p>
+                </div>
+
+                <ul class="list">
+                  {experience.description.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+
+                {
+                  experience.techStack && experience.techStack.length > 0 && (
+                    <div class="pill-row" style="margin-top: 1rem;">
+                      {experience.techStack.map((tech) => (
+                        <span class="chip">{tech}</span>
+                      ))}
+                    </div>
+                  )
+                }
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <p class="footer-note">Built with Astro. Content is pulled from a public data source at build time.</p>
+      </div>
+    )
+  }
+</BaseLayout>
