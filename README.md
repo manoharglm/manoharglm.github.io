@@ -16,8 +16,6 @@ pnpm deploy
 
 The homepage content is pulled from a public JSON endpoint at build time:
 
-- `src/lib/portfolio.ts`
-
 ## Notes
 
 - Static site output, good fit for GitHub Pages
